@@ -1,0 +1,58 @@
+AWSTemplateFormatVersion: 2010-09-09
+Description: AWS S3 bucket to host static website.
+
+# Usage - AWS CLI :  
+# aws cloudformation create-stack
+# --stack-name CreateS3BucketForMyApp
+# --template-body file://infrastructure/CF-s3-static-website-template.yaml
+# --parameters ParameterKey=S3BucketNameForApp,ParameterValue=pwt-my-app
+# --region us-east-1 
+# --profile admin
+
+Parameters:
+  S3BucketNameForApp:
+    Type: String
+    Description: Name of S3 bucket to store static sites files
+    # Default: pwt-my-app
+
+Outputs:
+  S3Bucket:
+    Description: URL for website hosted on S3
+    Value: !GetAtt
+      - S3BucketForMyapp
+      - WebsiteURL
+
+Resources:
+  S3BucketForMyapp:
+    # UpdateReplacePolicy: "Retain"
+    Type: "AWS::S3::Bucket"
+    Properties:
+      WebsiteConfiguration:
+        IndexDocument: "index.html"
+      PublicAccessBlockConfiguration:
+        RestrictPublicBuckets: false
+        IgnorePublicAcls: false
+        BlockPublicPolicy: false
+        BlockPublicAcls: false
+      BucketName: !Ref S3BucketNameForApp
+      OwnershipControls:
+        Rules:
+        - ObjectOwnership: "BucketOwnerEnforced"
+      BucketEncryption:
+        ServerSideEncryptionConfiguration:
+        - BucketKeyEnabled: true
+          ServerSideEncryptionByDefault:
+            SSEAlgorithm: "AES256"
+  S3BucketPolicyForMyApp:
+    Type: "AWS::S3::BucketPolicy"
+    Properties:
+      Bucket:
+        Ref: "S3BucketForMyapp" # bucketname
+      PolicyDocument:
+        Version: "2012-10-17"
+        Statement:
+        - Resource: !Sub "arn:aws:s3:::${S3BucketForMyapp}/*"
+          Action: "s3:GetObject"
+          Effect: "Allow"
+          Principal: "*"
+          Sid: "PublicReadGetObject"
