@@ -1,5 +1,5 @@
 # CICD project
-A simple CICD pipeline to deploy a Simple React frontend app to AWS S3 using GitHub Actions. Jenkins server is hosted on AWS EC2. A Github workflow is created to checkout the code from Git Repo, installing nodes, installing dependencies and build and deploy the new build to S3 bucket using AWS CLI. This workflow will be triggered by code push to Github.
+A simple CICD pipeline to deploy a Simple React frontend app to AWS S3 using GitHub Actions. A Github workflow is created to checkout the code from Git Repo, installing nodes, installing dependencies and build and deploy the new build to S3 bucket using AWS CLI. This workflow will be triggered by code push to Github.
 
 ### Diagram
 ![screenshot](.github/images/github-actions-deploy-s3.drawio.png)
