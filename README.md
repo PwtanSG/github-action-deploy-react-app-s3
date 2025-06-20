@@ -1,6 +1,9 @@
 # CICD project
 A simple CICD pipeline to deploy a Simple React frontend app to AWS S3 using GitHub Actions. Jenkins server is hosted on AWS EC2. A Github workflow is created to checkout the code from Git Repo, installing nodes, installing dependencies and build and deploy the new build to S3 bucket using AWS CLI. This workflow will be triggered by code push to Github.
 
+### Diagram
+![screenshot](.github/images/github-actions-deploy-s3.drawio.png)
+
 ## React Frontend App
 This simple frontend was bootstrapped with [Create React App](https://github.com/facebook/create-react-app).
 
@@ -9,11 +12,11 @@ The React Frontend App will be hosted on S3 static website hosting. Created AWS 
 
 ### GitHub setup
 Repository->settings->security->Secrets and variable
-Create Repository secrets
-AWS_ACCESS_KEY_ID
-AWS_SECRET_ACCESS_KEY
+- Create Repository secrets
+AWS_ACCESS_KEY_ID <br>
+AWS_SECRET_ACCESS_KEY <br>
 
-Create Repository variables
+- Create Repository variables
 AWS_REGION - us-east-1
 NODE_VERSION - 18.15.0
 
