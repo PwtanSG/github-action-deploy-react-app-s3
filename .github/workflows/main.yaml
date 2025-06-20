@@ -12,6 +12,17 @@ jobs:
       - name: Checkout
         uses: actions/checkout@v1
 
+      - name: Install node
+        uses: actions/setup-node@v1
+        with:
+          node-version: ${{ secrets.NODE_VERSION }}
+
+      - name: Install dependencies
+        run: npm Install
+
+      - name: build
+        run: npm run build
+
       - name: Configure AWS Credentials
         uses: aws-actions/configure-aws-credentials@v1
         with:
